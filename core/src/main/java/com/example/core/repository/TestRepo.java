@@ -1,5 +1,12 @@
 package com.example.core.repository;
 
-public class TestRepo {
-  
+import com.example.core.model.ModuleTest;
+
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface TestRepo {
+
+  public ModuleTest helloWorld();
+
 }

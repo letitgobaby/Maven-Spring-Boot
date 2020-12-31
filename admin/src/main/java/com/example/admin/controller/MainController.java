@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class MainController {
   
-  @GetMapping(value = "/test")
-  public @ResponseBody String test() {
+  @GetMapping(value = "/testadmin")
+  public String test() {
     return "test";
   }
 
