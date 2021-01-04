@@ -16,6 +16,7 @@ public class IndexController {
     public String index(Model model, String msg) {
         model.addAttribute("msg", msg);
 
+        // webMVC의 디스패치 컨트롤러 흐름 찾아보기
         return "index";
     }
 }
