@@ -25,7 +25,8 @@ hs_err_pid*
 
 bin/
 target/
-.settings
-.project
-.factorypath
-.classpath
+*.settings
+*.project
+*.factorypath
+*.classpath
+*.iml
