@@ -1,7 +1,9 @@
 package com.example.core.model;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.GeneratorType;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
