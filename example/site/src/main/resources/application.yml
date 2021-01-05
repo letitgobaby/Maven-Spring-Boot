@@ -1,0 +1,18 @@
+spring:
+  thymeleaf:
+    cache: false
+
+
+---
+#spring.profiles: dev
+spring:
+  profiles:
+    active: dev
+  datasource:
+    url: jdbc:h2:mem:tempdb
+
+---
+#spring.profiles: prod
+spring:
+  profiles:
+    active: prod
