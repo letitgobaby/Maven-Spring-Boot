@@ -54,17 +54,16 @@
 			<properties>
 					<activatedProperties>dev</activatedProperties>
 			</properties>
-
-	</profile>
-	<profile>
+		</profile>
+		<profile>
 			<id>prod</id>
 			<properties>
-					<activatedProperties>prod</activatedProperties>
+				<activatedProperties>prod</activatedProperties>
 			</properties>
 			<activation>
 				<activeByDefault>true</activeByDefault>
-		</activation>
-	</profile>
+			</activation>
+		</profile>
 	</profiles>
 
 </project>

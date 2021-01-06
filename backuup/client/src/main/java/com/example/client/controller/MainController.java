@@ -1,6 +1,9 @@
 package com.example.client.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,35 +25,19 @@ public class MainController {
   private PostService postService;
 
   @GetMapping
-  public String index(Model model) {
+  public String index(@PageableDefault Pageable pageable, Model model) {
 
     model.addAttribute("title", "jinwooJeong");
     model.addAttribute("subtitle", "hello jinwoo !!");
 
+    Page<Post> postlist = postService.getPostList(pageable);
+    model.addAttribute("itemList", postlist);
 
-    // ArrayList<HashMap> itemList = new ArrayList<>();
-    // HashMap item = new HashMap<String, String>();
-
-    // item.put("title", "joins.net.blog");
-    // item.put("subtitle", "hello ~~!!!~~!");
-    // item.put("href", "post");
-    // item.put("updated", "2020/01.01");
-
-    // itemList.add(item);
-    // itemList.add(item);
-    // itemList.add(item);
-
-    // System.out.println( item );
-
-    // model.addAttribute("itemList", itemList);
-
-
-    model.addAttribute("itemList", postService.findAll());
+    model.addAttribute("page", pageable.getPageNumber());
+    model.addAttribute("size", pageable.getPageSize());
 
     // webMVC의 디스패치 컨트롤러 흐름 찾아보기
     return "index";
   }
-
-
 
 }
