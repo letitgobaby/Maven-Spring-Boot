@@ -17,12 +17,11 @@ public class PostService {
   private PostRepo postRepo;
 
   public List<Post> findAll() {
-    System.out.println( postRepo.findAll() );
     return postRepo.findAll();
   }
 
-  public Optional<Post> findOne(Long id) {
-    return postRepo.findById(id);
+  public Post findOne(Long id) {
+    return postRepo.findById(id).get();
   }
 
 }
