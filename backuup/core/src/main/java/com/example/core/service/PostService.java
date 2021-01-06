@@ -1,6 +1,7 @@
 package com.example.core.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.example.core.model.Post;
 import com.example.core.repository.PostRepo;
@@ -18,6 +19,10 @@ public class PostService {
   public List<Post> findAll() {
     System.out.println( postRepo.findAll() );
     return postRepo.findAll();
+  }
+
+  public Optional<Post> findOne(Long id) {
+    return postRepo.findById(id);
   }
 
 }
