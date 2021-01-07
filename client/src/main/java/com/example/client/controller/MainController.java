@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 import com.example.core.model.Post;
 import com.example.core.service.PostService;
 
@@ -18,32 +20,15 @@ import com.example.core.service.PostService;
 @RequestMapping("/")
 public class MainController {
 
-  @Autowired
-  private PostService postService;
-
   @GetMapping
-  public String index(@PageableDefault Pageable pageable, Model model) {
+  public String index(Model model) {
 
     // Title, SubTitle
     model.addAttribute("title", "jinwooJeong");
     model.addAttribute("subtitle", "hello jinwoo !!");
 
-    // Item List
-    Page<Post> postlist = postService.getPostList(pageable);
-    model.addAttribute("itemList", postlist);
-
-    System.out.println( postlist.getClass().getName() );
-
-    // Paging
-    model.addAttribute("page", pageable.getPageNumber());
-    model.addAttribute("size", pageable.getPageSize());
-
     return "index";
   }
 
-  @GetMapping(value = "/test")
-  public String testVuePage() {
-    return "dist/index.html";
-  }
 
 }

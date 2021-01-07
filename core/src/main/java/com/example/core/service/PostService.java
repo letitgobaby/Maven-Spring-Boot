@@ -27,10 +27,10 @@ public class PostService {
     return postRepo.findById(id).get();
   }
 
-  public Page<Post> getPostList(Pageable pageable) {
+  public List<Post> getPostList(Pageable pageable) {
     int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
     pageable = PageRequest.of(page, pageable.getPageSize());
-    return postRepo.findAll(pageable);
+    return postRepo.findAll(pageable).getContent();
   }
 
 }
