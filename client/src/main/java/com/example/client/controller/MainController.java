@@ -1,5 +1,6 @@
 package com.example.client.controller;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,11 +32,18 @@ public class MainController {
     Page<Post> postlist = postService.getPostList(pageable);
     model.addAttribute("itemList", postlist);
 
+    System.out.println( postlist.getClass().getName() );
+
     // Paging
     model.addAttribute("page", pageable.getPageNumber());
     model.addAttribute("size", pageable.getPageSize());
 
     return "index";
+  }
+
+  @GetMapping(value = "/test")
+  public String testVuePage() {
+    return "dist/index.html";
   }
 
 }
