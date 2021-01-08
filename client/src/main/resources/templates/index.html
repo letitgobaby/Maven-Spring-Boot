@@ -76,32 +76,15 @@
   <div class="container">
     <div class="row">
 
-      <div class="col-lg-8 col-md-10 mx-auto" id="vueComponent">
-        <div v-for="item in itemList">
-          <div class="post-preview">
-            <a href="/post">
-              <h2 class="post-title">
-                {{ item.title }}
-              </h2>
-              <h3 class="post-subtitle">
-                {{ item.subtitle }}
-              </h3>
-            </a>
-            <p class="post-meta">Posted by
-              <a href="#">Start Bootstrap</a>
-              on {{ item.updated }}
-            </p>
-          </div>
-          <hr>
-        </div>
+      <div class="col-lg-10 col-md-10 mx-auto" id="vueComponent">
+        <!-- Paging List -->
+        <post-list v-for="item in itemList" v-bind:post='item'></post-list>
 
-        <!-- Pager -->
+        <!-- Paging button -->
         <div class="clearfix">
-          <div class="btn btn-primary text-center" href="" @click="paging">
-            Older Posts &rarr;</div>
+          <div class="btn btn-primary text-center" href="" v-on:click="paging">Older Posts &rarr;</div>
         </div>
       </div>
-
 
     </div>
   </div>
@@ -158,46 +141,9 @@
   <!-- Vue.js imports -->
   <script src="webjars/vue/vue.min.js"></script>
   <script src="webjars/axios/dist/axios.min.js"></script>
+
   <!-- Actual Vue.js script -->
-  <script>
-
-    var app = new Vue({
-      el: '#vueComponent',
-      data() {
-        return {
-          itemList: null,
-          page: 0,
-          size: 10
-        }
-      },
-      mounted() {
-        axios.get('/api/v1/postPaging', {
-          params: { page: this.page, size: this.size }
-        })
-        .then( response => {
-          this.itemList = response.data.data;
-          this.page = response.data.page;
-          this.size = response.data.size + 10;
-        });
-
-      },
-      methods: {
-        paging: function () {
-          axios.get('/api/v1/postPaging', {
-            params: { page: this.page, size: this.size }
-          })
-          .then( response => {
-            this.itemList = response.data.data;
-            this.page = response.data.page;
-            this.size = response.data.size + 10;
-          });
-        }
-      }
-    });
-
-
-  </script>
-
+  <script src="js/infiniteList.js"></script>
 
 </body>
 

@@ -1,24 +1,23 @@
 package com.example.client.controller;
 
-import org.json.simple.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
-
-import com.example.core.model.Post;
-import com.example.core.service.PostService;
-
 
 @Controller
 @RequestMapping("/")
 public class MainController {
+
+  // @ModelAttribute("info")
+  // public Map<String, String> defaultInfo() {
+
+  //   Map<String, String> info = new HashMap<>();
+  //   info.put("title", "jinwooJeong");
+  //   info.put("subtitle", "hello jinwoo !!");
+  //   return info;
+  // }
 
   @GetMapping
   public String index(Model model) {
