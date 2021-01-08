@@ -27,7 +27,7 @@ var app = new Vue({
       page: 0,
       size: 10
   },
-  mounted() {
+  beforeMount() {
     axios.get('/api/v1/postPaging', {
       params: { page: this.page, size: this.size }
     })
@@ -36,7 +36,10 @@ var app = new Vue({
         this.page = response.data.page;
         this.size = response.data.size + 10;
       });
-
+  },
+  errorCaptured(err, vm, info) {
+    console.log('errorCaptured !!');
+    console.log( err, vm, info );
   },
   methods: {
     paging: function () {
@@ -52,3 +55,4 @@ var app = new Vue({
 
   }
 });
+

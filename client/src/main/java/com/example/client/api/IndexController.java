@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
-
 import com.example.core.model.Post;
 import com.example.core.service.PostService;
 
