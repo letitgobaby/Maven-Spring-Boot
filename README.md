@@ -1,11 +1,17 @@
 # Maven-Spring-Boot
 Springboot example using Maven multi modules 
 
+<br />
 
-- mvnw clean install
+### - Client Module
 
-- mvnw spring-boot:run -pl client        -> default profile is prod
-- mvnw spring-boot:run -pl client -Pprod 
-- mvnw spring-boot:run -pl client -Pdev
+mvnw clean install
 
-- mvnw spring-boot:run -pl admin
+mvnw spring-boot:run -pl client -Pprod   OR   mvnw spring-boot:run -pl client  
+
+mvnw spring-boot:run -pl client -Pdev
+
+mvnw spring-boot:run -pl admin
+
+
+### - Admin Module
