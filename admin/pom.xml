@@ -12,7 +12,14 @@
 
 	<properties>
 		<java.version>1.8</java.version>
+
+		<frontend-maven-plugin.version>1.9.1</frontend-maven-plugin.version>
+		<nodeVersion.version>v12.20.0</nodeVersion.version>
+		<npmVersion.version>6.14.8</npmVersion.version>
+		<maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
+		<maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
 	</properties>
+
 
 	<dependencies>
 
@@ -51,6 +58,192 @@
 		</dependency>
 
 	</dependencies>
+
+
+	<profiles>
+		<!-- mvn xxx -Prelease -->
+		<profile>
+			<id>prod</id>
+			<build>
+				<plugins>
+					<!-- https://github.com/eirslett/frontend-maven-plugin -->
+					<plugin>
+						<groupId>com.github.eirslett</groupId>
+						<artifactId>frontend-maven-plugin</artifactId>
+						<version>${frontend-maven-plugin.version}</version>
+
+						<configuration>
+							<nodeVersion>${nodeVersion.version}</nodeVersion>
+							<npmVersion>${npmVersion.version}</npmVersion>
+							<workingDirectory>front</workingDirectory>
+						</configuration>
+
+						<executions>
+							<execution>
+								<id>install node and npm</id>
+								<goals>
+									<goal>install-node-and-npm</goal>
+								</goals>
+							</execution>
+
+							<execution>
+								<id>npm install</id>
+								<goals>
+									<goal>npm</goal>
+								</goals>
+								<configuration>
+									<arguments>install</arguments>
+								</configuration>
+							</execution>
+
+							<execution>
+								<id>npm run build</id>
+								<goals>
+									<goal>npm</goal>
+								</goals>
+								<configuration>
+									<arguments>run build</arguments>
+								</configuration>
+							</execution>
+
+						</executions>
+					</plugin>
+
+					<!--  maven-resources-plugin -->
+					<plugin>
+						<artifactId>maven-resources-plugin</artifactId>
+						<version>${maven-resources-plugin.version}</version>
+						<executions>
+
+							<!-- copy front-end template (dist/index.html) -->
+							<!-- <execution>
+								<id>copy front template</id>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<phase>prepare-package</phase>
+								<configuration>
+									<outputDirectory>${basedir}/src/main/resources/templates</outputDirectory>
+									<resources>
+										<resource>
+											<directory>front/dist</directory>
+											<includes>
+												<include>index.html</include>
+											</includes>
+										</resource>
+									</resources>
+								</configuration>
+							</execution> -->
+
+							<!--  copy front-end assets,static -->
+							<execution>
+								<id>copy front assets</id>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<phase>prepare-package</phase>
+								<configuration>
+									<outputDirectory>${basedir}/src/main/resources/static</outputDirectory>
+									<resources>
+										<resource>
+											<directory>front/dist</directory>
+											<!-- <excludes>
+												<exclude>index.html</exclude>
+											</excludes> -->
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+
+							<!--  copy front-end template to target -->
+							<!-- <execution>
+								<id>copy front template to target</id>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<phase>prepare-package</phase>
+								<configuration>
+									<outputDirectory>${basedir}/target/classes/templates</outputDirectory>
+									<resources>
+										<resource>
+											<directory>front/dist</directory>
+											<includes>
+												<include>index.html</include>
+											</includes>
+										</resource>
+									</resources>
+								</configuration>
+							</execution> -->
+
+							<!--  copy front-end assets to target -->
+							<execution>
+								<id>copy front assets to target</id>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<phase>prepare-package</phase>
+								<configuration>
+									<outputDirectory>${basedir}/target/classes/static</outputDirectory>
+									<resources>
+										<resource>
+											<directory>front/dist</directory>
+											<!-- <excludes>
+												<exclude>index.html</exclude>
+											</excludes> -->
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+
+						</executions>
+
+
+					</plugin>
+				</plugins>
+			</build>
+
+			<properties>
+				<activatedProperties>prod</activatedProperties>
+			</properties>
+
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+
+		</profile>
+	</profiles>
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<!--  maven-clean-plugin -->
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>${maven-clean-plugin.version}</version>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>front/dist</directory>
+						</fileset>
+						<fileset>
+							<directory>${basedir}/src/main/resources/static</directory>
+						</fileset>
+						<!-- <fileset>
+							<directory>${basedir}/src/main/resources/templates</directory>
+							<includes>
+								<include>index.html</include>
+							</includes>
+						</fileset> -->
+					</filesets>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
 
 
 </project>
