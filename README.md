@@ -11,7 +11,8 @@ mvnw spring-boot:run -pl client -Pprod   OR   mvnw spring-boot:run -pl client
 
 mvnw spring-boot:run -pl client -Pdev
 
-mvnw spring-boot:run -pl admin
-
+<br />
 
 ### - Admin Module
+
+mvnw spring-boot:run -pl admin
