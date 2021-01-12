@@ -8,13 +8,27 @@
       </div>
     </div>
     <div class="content">
-      
       <!-- title -->
-      <el-input
-        class="m1"
-        placeholder="Please Title"
-        v-model="title"
-      ></el-input>
+      <div class="title">
+        <h3>타이틀</h3>
+        <el-input
+          class="m1"
+          placeholder="Please Title"
+          v-model="title"
+        ></el-input>
+      </div>
+
+      <!-- sub title -->
+      <div class="title">
+        <h4>서브타이틀</h4>
+        <el-input
+          class="m1"
+          placeholder="Please SubTitle"
+          v-model="subtitle"
+        ></el-input>
+      </div>
+
+      <file-upload />
 
       <!-- quill -->
       <!-- Or manually control the data synchronization -->
@@ -29,50 +43,56 @@
 </template>
 
 <script>
-import 'quill/dist/quill.core.css'
-import 'quill/dist/quill.snow.css'
-import 'quill/dist/quill.bubble.css'
-import { quillEditor } from 'vue-quill-editor'
+import "quill/dist/quill.core.css";
+import "quill/dist/quill.snow.css";
+import "quill/dist/quill.bubble.css";
+import { quillEditor } from "vue-quill-editor";
+import Home from "./Home.vue";
+import FileUpload from "../components/layout/FileUpload";
 
 export default {
-  name: 'editor',
+  name: "editor",
   components: {
-    quillEditor
+    quillEditor,
+    FileUpload,
+    Home,
   },
   data() {
     return {
-      title: '',
-      content: '',
+      title: "",
+      subtitle: "",
+      content: "",
 
-      editorOption: {}
-    }
+      editorOption: {},
+    };
   },
   mounted() {
-    const { title, content } = this.$route.params
-    this.title = title
-    this.content = content
+    const { title, content, subtitle } = this.$route.params;
+    this.title = title;
+    this.content = content;
+    this.subtitle = subtitle;
   },
   computed: {
     postId() {
-      const { id } = this.$route.params
-      return id
-    }
+      const { id } = this.$route.params;
+      return id;
+    },
   },
   methods: {
     onEditorChange({ quill, html, text }) {
-      console.log('editor change!', quill, html, text)
-      this.content = html
+      console.log("editor change!", quill, html, text);
+      this.content = html;
     },
     tapSave() {
-      this.$alert(`${this.content}`, 'Save Ok', {
-        confirmButtonText: 'OK',
-        callback: action => {
-          this.$router.replace('/')
-        }
-      })
-    }
-  }
-}
+      this.$alert(`${this.content}`, "Save Ok", {
+        confirmButtonText: "OK",
+        callback: (action) => {
+          this.$router.replace("/");
+        },
+      });
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -89,6 +109,9 @@ export default {
       margin-left: auto;
     }
   }
+  .title {
+    flex-direction: column;
+  }
   .content {
     flex: 1;
     display: flex;
@@ -97,6 +120,7 @@ export default {
     .m1 {
       margin: 1rem;
     }
+
     .editor {
       flex: 1;
       overflow: auto;
