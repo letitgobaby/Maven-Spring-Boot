@@ -26,6 +26,10 @@ node/
 package-lock.json
 node_modules/
 
+dist/
+resources/
+templates/
+
 .idea/
 bin/
 target/

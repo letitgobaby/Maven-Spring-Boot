@@ -6,3 +6,10 @@ export function reqHomeList ({ page, size }) {
     method: 'GET'
   })
 }
+
+export function getCountAll() {
+  return request({
+    url: '/api/counts',
+    method: 'GET'
+  })
+}

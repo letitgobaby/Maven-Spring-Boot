@@ -25,6 +25,11 @@ public class PostController {
   
   @Autowired
   private PostService postService;
+
+  @GetMapping(value = "/api/counts")
+  public @ResponseBody Long getCountAll() {
+    return postService.getCountAll();
+  }
   
   @GetMapping(value = "/api/posts")
 	public @ResponseBody JSONObject postPaging(@PageableDefault Pageable pageable) {
