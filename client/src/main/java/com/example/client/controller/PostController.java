@@ -23,7 +23,7 @@ public class PostController {
     Long pageId = 1L;
     if ( id != null ) pageId = id;
 
-    model.addAttribute("item", postService.findOne(pageId) );
+    model.addAttribute("item", postService.getOne(pageId) );
     return "post";
   }
   

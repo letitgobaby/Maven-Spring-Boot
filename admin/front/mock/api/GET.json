@@ -1,0 +1,25 @@
+{
+  "result": true,
+  "items": [
+    {
+      "id": 1,
+      "title": "제목-1",
+      "content": "안녕하세요"
+    },
+    {
+      "id": 2,
+      "title": "제목-2",
+      "content": "미소랩 java-multi-archetype"
+    },
+    {
+      "id": 3,
+      "title": "제목-3",
+      "content": "블로그 데모 사이트"
+    },
+    {
+      "id": 4,
+      "title": "제목-4",
+      "content": "vue.js template"
+    }
+  ]
+}

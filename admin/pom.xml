@@ -31,6 +31,11 @@
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 			<optional>true</optional>
@@ -116,7 +121,7 @@
 						<executions>
 
 							<!-- copy front-end template (dist/index.html) -->
-							<!-- <execution>
+							<execution>
 								<id>copy front template</id>
 								<goals>
 									<goal>copy-resources</goal>
@@ -133,7 +138,7 @@
 										</resource>
 									</resources>
 								</configuration>
-							</execution> -->
+							</execution>
 
 							<!--  copy front-end assets,static -->
 							<execution>
@@ -147,16 +152,16 @@
 									<resources>
 										<resource>
 											<directory>front/dist</directory>
-											<!-- <excludes>
+											<excludes>
 												<exclude>index.html</exclude>
-											</excludes> -->
+											</excludes>
 										</resource>
 									</resources>
 								</configuration>
 							</execution>
 
 							<!--  copy front-end template to target -->
-							<!-- <execution>
+							<execution>
 								<id>copy front template to target</id>
 								<goals>
 									<goal>copy-resources</goal>
@@ -173,7 +178,7 @@
 										</resource>
 									</resources>
 								</configuration>
-							</execution> -->
+							</execution>
 
 							<!--  copy front-end assets to target -->
 							<execution>
@@ -187,9 +192,9 @@
 									<resources>
 										<resource>
 											<directory>front/dist</directory>
-											<!-- <excludes>
+											<excludes>
 												<exclude>index.html</exclude>
-											</excludes> -->
+											</excludes>
 										</resource>
 									</resources>
 								</configuration>
@@ -232,12 +237,12 @@
 						<fileset>
 							<directory>${basedir}/src/main/resources/static</directory>
 						</fileset>
-						<!-- <fileset>
+						<fileset>
 							<directory>${basedir}/src/main/resources/templates</directory>
 							<includes>
 								<include>index.html</include>
 							</includes>
-						</fileset> -->
+						</fileset>
 					</filesets>
 				</configuration>
 			</plugin>
