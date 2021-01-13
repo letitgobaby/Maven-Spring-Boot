@@ -28,6 +28,7 @@
         ></el-input>
       </div>
 
+      <!-- file upload -->
       <file-upload />
 
       <!-- quill -->

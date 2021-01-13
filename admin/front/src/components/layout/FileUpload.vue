@@ -1,45 +1,91 @@
 <template>
   <div>
-    <el-upload
-      class="avatar-uploader"
-      action=""
-      :show-file-list="false"
-      :on-success="handleAvatarSuccess"
-      :before-upload="beforeAvatarUpload"
-    >
-      <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+    <el-upload 
+      action="#" 
+      accept="image/*" 
+      list-type="picture-card" 
+      :limit="1" 
+      :auto-upload="false" 
+      :on-change="onSuccess" >
+
+      <i slot="default" class="el-icon-plus"></i>
+
+      <div slot="file" slot-scope="{ file }">
+        <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" ref="file" />
+        <span class="el-upload-list__item-actions">
+          <span
+            class="el-upload-list__item-preview"
+            @click="handlePictureCardPreview(file)">
+            <i class="el-icon-zoom-in"></i>
+          </span>
+          <span
+            v-if="!disabled"
+            class="el-upload-list__item-delete"
+            @click="handleRemove(file)">
+            <i class="el-icon-delete"></i>
+          </span>
+        </span>
+      </div>
+
     </el-upload>
-    {{ datas }}
+
+    <el-dialog :visible.sync="dialogVisible">
+      <img width="100%" :src="dialogImageUrl" alt="" />
+    </el-dialog>
+
+    <el-button size="mini" type="success" :disabled="!enabledUploadBtn" @click="fetch" >{{btnText}}</el-button>
   </div>
 </template>
 
 
 <script>
+import { fileUpload } from '@/api/post'
+
 export default {
   data() {
     return {
-      imageUrl: "",
-      datas: {},
+      item: null,
+      dialogImageUrl: "",
+      dialogVisible: false,
+      disabled: false,
+
+      enabledUploadBtn: false,
+      uploadBtnIcon: false,
+      btnText: null
     };
   },
   methods: {
-    handleAvatarSuccess(res, file) {
-      alert("suc");
-      this.imageUrl = URL.createObjectURL(file.raw);
-      this.datas = file;
+    handleRemove(file) {
+      console.log(file)
     },
-    beforeAvatarUpload(file) {
-      let w = true;
-      let fileReader = new FileReader();
-      fileReader.onloadend = async (e) => {
-        alert(e);
-        w = false;
-      };
-      fileReader.readAsText(file);
-      return w;
+    handlePictureCardPreview(file) {
+      this.dialogImageUrl = file.url;
+      this.dialogVisible = true;
     },
-  },
+    fetch(file) {
+      const formData = new FormData()
+      formData.append('file', this.$refs.file)
+      console.log(file, this.$refs )
+
+      fileUpload(formData.file)
+      .then(res => console.log(res) )
+    },
+
+    onSuccess(file) {
+      this.item = this.$refs.file
+
+      const formData = new FormData(this.$refs.file)
+      formData.append('file', file.raw)
+
+      fileUpload(formData).then(res => console.log(res) )
+
+      this.enabledUploadBtn = true;
+      this.uploadBtnIcon = 'el-icon-upload2';
+      this.btnText  ='data import ';
+
+    },
+
+  }
 };
 </script>
 
