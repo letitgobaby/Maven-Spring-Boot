@@ -73,7 +73,7 @@ public class PostController {
       String postJson = mapper.writeValueAsString(jobj);
       Post post = mapper.readValue(postJson, Post.class);
       
-      System.out.println("updatePost");
+      System.out.println(jobj.toJSONString());
       postService.updatePost(post);
     } catch(Exception e) {
       System.out.println("ERROR - " + e);
@@ -87,6 +87,18 @@ public class PostController {
   }
 
 
+  // @PostMapping(value = "/api/posts/image")
+  // public @ResponseBody void uploadImage(@RequestParam("file") MultipartFile file) throws Exception {
+    
+  //   String originalfileName = file.getOriginalFilename();
+	// 	File dest = new File("C:/Users/Joins/_images/" + originalfileName);
+  //   file.transferTo(dest);
+    
+  //   System.out.println(file);
+
+  // }
+
+
   @PostMapping(value = "/api/posts/image")
   public @ResponseBody void uploadImage(@RequestParam("file") MultipartFile file) throws Exception {
     
@@ -97,6 +109,5 @@ public class PostController {
     System.out.println(file);
     
   }
-
 
 }

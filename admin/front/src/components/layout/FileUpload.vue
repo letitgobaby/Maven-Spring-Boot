@@ -39,14 +39,18 @@
 
 
 <script>
+import { mapMutations } from 'vuex'
 import { fileUpload } from '@/api/post'
 
 export default {
   data() {
     return {
-      item: null,
+      imgTag: null,
+      imgName: "",
+      formData: null,
       dialogImageUrl: "",
       dialogVisible: false,
+
       disabled: false,
 
       enabledUploadBtn: false,
@@ -55,6 +59,8 @@ export default {
     };
   },
   methods: {
+    ...mapMutations(['SetImgData']),
+
     handleRemove(file) {
       console.log(file)
     },
@@ -67,17 +73,23 @@ export default {
       formData.append('file', this.$refs.file)
       console.log(file, this.$refs )
 
-      fileUpload(formData.file)
-      .then(res => console.log(res) )
+      // fileUpload(formData.file)
+      // .then(res => console.log(res) )
     },
 
     onSuccess(file) {
-      this.item = this.$refs.file
+      
+      this.imgTag = this.$refs.file
+      this.imgName = file.raw.name
 
       const formData = new FormData(this.$refs.file)
       formData.append('file', file.raw)
 
-      fileUpload(formData).then(res => console.log(res) )
+      this.SetImgData({ formData, imgName: file.raw.name })
+
+      this.formData = formData;
+
+      // fileUpload(formData).then(res => console.log(res) )
 
       this.enabledUploadBtn = true;
       this.uploadBtnIcon = 'el-icon-upload2';

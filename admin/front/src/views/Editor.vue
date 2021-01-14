@@ -48,6 +48,8 @@ import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
 import "quill/dist/quill.bubble.css";
 import { quillEditor } from "vue-quill-editor";
+import { mapMutations, mapActions } from 'vuex'
+
 import Home from "./Home.vue";
 import FileUpload from "../components/layout/FileUpload";
 
@@ -68,10 +70,14 @@ export default {
     };
   },
   mounted() {
-    const { title, content, subtitle } = this.$route.params;
+    const { id, title, href, content, subtitle, banner, updated } = this.$route.params;
+    this.id = id;
+    this.href = href;
     this.title = title;
     this.content = content;
     this.subtitle = subtitle;
+    this.banner = banner;
+    this.updated = updated;
   },
   computed: {
     postId() {
@@ -80,6 +86,8 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['InsertPost']),
+
     onEditorChange({ quill, html, text }) {
       console.log("editor change!", quill, html, text);
       this.content = html;
@@ -88,10 +96,20 @@ export default {
       this.$alert(`${this.content}`, "Save Ok", {
         confirmButtonText: "OK",
         callback: (action) => {
+
+          this.InsertPost({
+            id: this.id,
+            href: this.href,
+            title: this.title,
+            subtitle: this.subtitle,
+            content: this.content,
+          });
+
           this.$router.replace("/");
         },
       });
     },
+
   },
 };
 </script>
