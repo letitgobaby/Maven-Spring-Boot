@@ -50,6 +50,8 @@
 			<scope>provided</scope>
 		</dependency>
 
+		
+
 		<!-- Swagger -->
 		<dependency>
 			<groupId>io.springfox</groupId>

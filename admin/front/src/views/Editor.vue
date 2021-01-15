@@ -29,7 +29,7 @@
       </div>
 
       <!-- file upload -->
-      <file-upload />
+      <file-upload v-bind:banner="banner" />
 
       <!-- quill -->
       <!-- Or manually control the data synchronization -->
@@ -65,6 +65,7 @@ export default {
       title: "",
       subtitle: "",
       content: "",
+      banner: this.$route.params,
 
       editorOption: {},
     };
@@ -86,29 +87,42 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['InsertPost']),
+    ...mapActions(['FetchPost']),
 
     onEditorChange({ quill, html, text }) {
       console.log("editor change!", quill, html, text);
       this.content = html;
     },
+
     tapSave() {
       this.$alert(`${this.content}`, "Save Ok", {
         confirmButtonText: "OK",
         callback: (action) => {
 
-          this.InsertPost({
-            id: this.id,
-            href: this.href,
-            title: this.title,
-            subtitle: this.subtitle,
-            content: this.content,
-          });
-
-          this.$router.replace("/");
+          if (this.validation()) {
+            this.FetchPost({
+              id: this.id,
+              href: this.href,
+              title: this.title,
+              subtitle: this.subtitle,
+              content: this.content,
+              banner: this.banner
+            });
+            this.$router.replace("/");
+          }
+          
         },
       });
     },
+
+    validation() {
+      if ( this.title === undefined && this.content === undefined ) {
+        alert('타이틀과 내용은 필수입니다. ');
+        return false;
+      }
+      return true;
+      console.log( this.id, this.title, this.subtitle, this.content );
+    }
 
   },
 };

@@ -39,22 +39,33 @@ public class PostService {
     return postRepo.findById(id).get();
   }
 
-  public void addPost(Post post) {
-    postRepo.save(post);
+  public void addPost(JSONObject jobj) {
+    try {
+      Post post = new Post();
+      post.setTitle( jobj.get("title").toString() );
+      post.setSubtitle( jobj.get("subtitle").toString() );
+      post.setContent( jobj.get("content").toString() );
+      post.setBanner( jobj.get("banner").toString() );
+      // post.setHref( jobj.get("href").toString() );
+  
+      postRepo.save(post);
+    } catch (Exception e) {
+      System.out.println(e);
+    }
   }
 
-  public void updatePost(Post post) {
-    
-    post.setTitle("title");
-    post.setSubtitle("subtitle");
-    post.setHref("href");
-    post.setContent("content");
-    post.setBanner("banner");
-
-    LocalDateTime currentDateTime = LocalDateTime.now();
-    post.setUpdated(currentDateTime);
-
-    postRepo.save(post);
+  public void updatePost(JSONObject jobj) {
+    try {
+      Post post = postRepo.getOne( Long.parseLong(jobj.get("id").toString()) );
+      post.setTitle( jobj.get("title").toString() );
+      post.setSubtitle( jobj.get("subtitle").toString() );
+      post.setContent( jobj.get("content").toString() );
+      post.setBanner( jobj.get("banner").toString() );
+  
+      postRepo.save(post);
+    } catch (Exception e) {
+      System.out.println(e);
+    }
   } 
 
   public void deletePost(Long id) {

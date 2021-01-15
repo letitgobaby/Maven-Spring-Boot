@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import ls from 'store'
 
-import { fileUpload, insertPost } from '@/api/post'
+import { fileUpload, insertPost, updatePost } from '@/api/post'
 import { reqLogin, reqUserInfo, reqLogout } from '@/api/user'
 
 Vue.use(Vuex)
@@ -45,7 +45,6 @@ export default new Vuex.Store({
       state.postInfo.title = payload.title;
       state.postInfo.subtitle = payload.subtitle;
       state.postInfo.content = payload.content;
-      state.postInfo.updated = new Date();
     },
   },
   actions: {
@@ -77,24 +76,34 @@ export default new Vuex.Store({
       })
     },
 
+    // 이름 바꿔야됨
     async SavePost({ commit }, postInfo) {
       commit('SetPostData', postInfo);
-      return postInfo;
     },
 
+    // 이름 바꿔야됨
     async SaveImg() {
-      console.log("@@@@@@@@@@@", this.state.formData);
-
-      console.log("!!!!!!!!!!!", this.state.postInfo);
-
-      fileUpload(this.state.formData)
+      if ( this.state.formData !== null ) {
+        fileUpload(this.state.formData)
         .then(res => {
-          insertPost(this.state.postInfo); 
+          if ( this.state.postInfo.id === undefined ) {
+            insertPost(this.state.postInfo); 
+          } else {
+            updatePost(this.state.postInfo);
+          }
         })
         .catch( err => console.log( err ) );
+      } else {
+        if ( this.state.postInfo.id === undefined ) {
+          insertPost(this.state.postInfo); 
+        } else {
+          updatePost(this.state.postInfo);
+        }
+      }
     },
 
-    async InsertPost({ dispatch }, postInfo) {
+    // 이름 바꿔야됨
+    async FetchPost({ dispatch }, postInfo) {
       await dispatch('SavePost', postInfo);
       await dispatch('SaveImg');
     }

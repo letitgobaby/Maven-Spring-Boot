@@ -1,16 +1,28 @@
 package com.example.admin.api;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+
+import javax.imageio.ImageIO;
 
 import com.example.core.model.Post;
 import com.example.core.service.PostService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.apache.commons.io.IOUtils;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,30 +66,13 @@ public class PostController {
 
   @PostMapping(value = "/api/posts")
   public @ResponseBody void addPost(@RequestBody JSONObject jobj) {
-    try {
-      ObjectMapper mapper = new ObjectMapper();
-      String postJson = mapper.writeValueAsString(jobj);
-      Post post = mapper.readValue(postJson, Post.class);
-      
-      System.out.println("addPost");
-      postService.addPost(post);
-    } catch(Exception e) {
-      System.out.println("ERROR - " + e);
-    }
+    postService.addPost(jobj);
   }
 
   @PutMapping(value = "/api/posts")
   public @ResponseBody void updatePost(@RequestBody JSONObject jobj) {
-    try {
-      ObjectMapper mapper = new ObjectMapper();
-      String postJson = mapper.writeValueAsString(jobj);
-      Post post = mapper.readValue(postJson, Post.class);
-      
-      System.out.println(jobj.toJSONString());
-      postService.updatePost(post);
-    } catch(Exception e) {
-      System.out.println("ERROR - " + e);
-    }
+    System.out.println(" PUT PUT PUT PUT ");
+    postService.updatePost(jobj);
   }
 
   @DeleteMapping(value = "/api/posts/{id}")
@@ -86,28 +81,22 @@ public class PostController {
     postService.deletePost(id);
   }
 
-
-  // @PostMapping(value = "/api/posts/image")
-  // public @ResponseBody void uploadImage(@RequestParam("file") MultipartFile file) throws Exception {
-    
-  //   String originalfileName = file.getOriginalFilename();
-	// 	File dest = new File("C:/Users/Joins/_images/" + originalfileName);
-  //   file.transferTo(dest);
-    
-  //   System.out.println(file);
-
-  // }
-
-
   @PostMapping(value = "/api/posts/image")
   public @ResponseBody void uploadImage(@RequestParam("file") MultipartFile file) throws Exception {
-    
     String originalfileName = file.getOriginalFilename();
 		File dest = new File("C:/Users/Joins/_images/" + originalfileName);
     file.transferTo(dest);
     
     System.out.println(file);
-    
   }
+
+  @GetMapping(value = "/api/posts/images/{name}", produces = MediaType.IMAGE_JPEG_VALUE)
+  public @ResponseBody byte[] getImage(@PathVariable("name") String name) throws IOException {
+    String resourceFile ="C:/Users/Joins/_images/" + name;
+    InputStream resourceStream = new BufferedInputStream( new FileInputStream(resourceFile));
+
+    return IOUtils.toByteArray(resourceStream);
+  }
+
 
 }

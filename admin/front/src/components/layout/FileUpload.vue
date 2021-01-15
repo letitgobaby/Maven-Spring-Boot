@@ -11,7 +11,8 @@
       <i slot="default" class="el-icon-plus"></i>
 
       <div slot="file" slot-scope="{ file }">
-        <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" ref="file" />
+        <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" ref="img" />
+        
         <span class="el-upload-list__item-actions">
           <span
             class="el-upload-list__item-preview"
@@ -32,69 +33,59 @@
     <el-dialog :visible.sync="dialogVisible">
       <img width="100%" :src="dialogImageUrl" alt="" />
     </el-dialog>
-
-    <el-button size="mini" type="success" :disabled="!enabledUploadBtn" @click="fetch" >{{btnText}}</el-button>
+  
   </div>
 </template>
 
 
 <script>
 import { mapMutations } from 'vuex'
-import { fileUpload } from '@/api/post'
+import { getImage } from '@/api/post'
 
 export default {
+  props: ['banner'],
+
   data() {
     return {
-      imgTag: null,
       imgName: "",
-      formData: null,
-      dialogImageUrl: "",
+      dialogImageUrl: '',
       dialogVisible: false,
 
       disabled: false,
-
-      enabledUploadBtn: false,
-      uploadBtnIcon: false,
-      btnText: null
     };
   },
+
+  mounted() {
+
+    console.log(this.$refs)
+
+    // getImage(this.banner.banner)
+    //   .then( res => {
+    //     console.log( typeof res, URL.createObjectURL(res) );
+    //   });
+
+  },
+
   methods: {
     ...mapMutations(['SetImgData']),
 
     handleRemove(file) {
       console.log(file)
     },
+
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
     },
-    fetch(file) {
-      const formData = new FormData()
-      formData.append('file', this.$refs.file)
-      console.log(file, this.$refs )
-
-      // fileUpload(formData.file)
-      // .then(res => console.log(res) )
-    },
 
     onSuccess(file) {
-      
-      this.imgTag = this.$refs.file
+      console.log(this.$refs, typeof this.$refs, this.$refs.img )
       this.imgName = file.raw.name
 
       const formData = new FormData(this.$refs.file)
       formData.append('file', file.raw)
 
-      this.SetImgData({ formData, imgName: file.raw.name })
-
-      this.formData = formData;
-
-      // fileUpload(formData).then(res => console.log(res) )
-
-      this.enabledUploadBtn = true;
-      this.uploadBtnIcon = 'el-icon-upload2';
-      this.btnText  ='data import ';
-
+      // this.SetImgData({ formData, imgName: file.raw.name })
     },
 
   }
