@@ -65,7 +65,7 @@ export default {
       title: "",
       subtitle: "",
       content: "",
-      banner: this.$route.params,
+      banner: this.$route.params.banner,
 
       editorOption: {},
     };

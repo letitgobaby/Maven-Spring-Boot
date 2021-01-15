@@ -28,8 +28,13 @@ export function updatePost(postInfo) {
 }
 
 export function getImage(name) {
-  return request({
-    url: '/api/posts/' + name,
-    method: 'GET'
-  })
+  return {
+    name: name,
+    url:  'http://localhost:8090/api/posts/images/' + name
+  }
+
+  // return request({
+  //   url: '/api/posts/' + name,
+  //   method: 'GET'
+  // })
 }

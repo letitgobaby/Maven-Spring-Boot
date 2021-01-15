@@ -1,10 +1,11 @@
 <template>
   <div>
-    <el-upload 
+    <el-upload
       action="#" 
       accept="image/*" 
       list-type="picture-card" 
       :limit="1" 
+      :file-list="fileList"
       :auto-upload="false" 
       :on-change="onSuccess" >
 
@@ -50,27 +51,23 @@ export default {
       imgName: "",
       dialogImageUrl: '',
       dialogVisible: false,
-
+      fileList: [],
       disabled: false,
     };
   },
 
   mounted() {
-
-    console.log(this.$refs)
-
-    // getImage(this.banner.banner)
-    //   .then( res => {
-    //     console.log( typeof res, URL.createObjectURL(res) );
-    //   });
-
+    if (this.banner !== undefined) this.fileList = [ getImage(this.banner) ];
   },
 
   methods: {
     ...mapMutations(['SetImgData']),
 
     handleRemove(file) {
-      console.log(file)
+      this.fileList.splice(ele => {
+        if ( ele.name === file.name ) return true;
+      })
+
     },
 
     handlePictureCardPreview(file) {
@@ -79,13 +76,11 @@ export default {
     },
 
     onSuccess(file) {
-      console.log(this.$refs, typeof this.$refs, this.$refs.img )
       this.imgName = file.raw.name
-
       const formData = new FormData(this.$refs.file)
       formData.append('file', file.raw)
 
-      // this.SetImgData({ formData, imgName: file.raw.name })
+      this.SetImgData({ formData, imgName: file.raw.name });
     },
 
   }
