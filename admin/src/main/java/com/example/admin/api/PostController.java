@@ -3,26 +3,19 @@ package com.example.admin.api;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 
-import javax.imageio.ImageIO;
-
 import com.example.core.model.Post;
 import com.example.core.service.PostService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.apache.commons.io.IOUtils;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +24,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -86,8 +78,6 @@ public class PostController {
     String originalfileName = file.getOriginalFilename();
 		File dest = new File("C:/Users/Joins/_images/" + originalfileName);
     file.transferTo(dest);
-    
-    System.out.println(file);
   }
 
   @GetMapping(value = "/api/posts/images/{name}", produces = MediaType.IMAGE_JPEG_VALUE)

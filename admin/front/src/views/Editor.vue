@@ -121,7 +121,6 @@ export default {
         return false;
       }
       return true;
-      console.log( this.id, this.title, this.subtitle, this.content );
     }
 
   },

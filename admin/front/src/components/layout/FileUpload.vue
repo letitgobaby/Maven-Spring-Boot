@@ -48,7 +48,6 @@ export default {
 
   data() {
     return {
-      imgName: "",
       dialogImageUrl: '',
       dialogVisible: false,
       fileList: [],
@@ -67,7 +66,6 @@ export default {
       this.fileList.splice(ele => {
         if ( ele.name === file.name ) return true;
       })
-
     },
 
     handlePictureCardPreview(file) {
@@ -76,7 +74,6 @@ export default {
     },
 
     onSuccess(file) {
-      this.imgName = file.raw.name
       const formData = new FormData(this.$refs.file)
       formData.append('file', file.raw)
 
