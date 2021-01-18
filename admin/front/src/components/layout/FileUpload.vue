@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h4>배너 이미지</h4>
     <el-upload
       action="#" 
       accept="image/*" 

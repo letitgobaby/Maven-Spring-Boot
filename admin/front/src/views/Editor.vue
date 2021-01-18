@@ -48,7 +48,7 @@ import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
 import "quill/dist/quill.bubble.css";
 import { quillEditor } from "vue-quill-editor";
-import { mapMutations, mapActions } from 'vuex'
+import { mapMutations, mapActions } from "vuex";
 
 import Home from "./Home.vue";
 import FileUpload from "../components/layout/FileUpload";
@@ -71,7 +71,15 @@ export default {
     };
   },
   mounted() {
-    const { id, title, href, content, subtitle, banner, updated } = this.$route.params;
+    const {
+      id,
+      title,
+      href,
+      content,
+      subtitle,
+      banner,
+      updated,
+    } = this.$route.params;
     this.id = id;
     this.href = href;
     this.title = title;
@@ -87,7 +95,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['FetchPost']),
+    ...mapActions(["FetchPost"]),
 
     onEditorChange({ quill, html, text }) {
       console.log("editor change!", quill, html, text);
@@ -95,34 +103,37 @@ export default {
     },
 
     tapSave() {
-      this.$alert(`${this.content}`, "Save Ok", {
-        confirmButtonText: "OK",
-        callback: (action) => {
-
-          if (this.validation()) {
+      if (this.validation()) {
+        this.$alert(`${this.content}`, "Save Ok", {
+          confirmButtonText: "OK",
+          callback: (action) => {
             this.FetchPost({
               id: this.id,
               href: this.href,
               title: this.title,
               subtitle: this.subtitle,
               content: this.content,
-              banner: this.banner
-            });
-            this.$router.replace("/");
-          }
-          
-        },
-      });
+              banner: this.banner,
+            }).then( res => this.$router.replace("/") );
+
+            // this.$router.replace("/");
+          },
+        });
+      }
     },
 
     validation() {
-      if ( this.title === undefined && this.content === undefined ) {
-        alert('타이틀과 내용은 필수입니다. ');
+      if (
+        this.title === undefined ||
+        this.content === undefined ||
+        this.title === "" ||
+        this.content === ""
+      ) {
+        alert("타이틀과 내용은 필수입니다. ");
         return false;
       }
       return true;
-    }
-
+    },
   },
 };
 </script>

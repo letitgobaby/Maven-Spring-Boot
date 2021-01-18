@@ -45,6 +45,7 @@ export default new Vuex.Store({
       state.postInfo.title = payload.title;
       state.postInfo.subtitle = payload.subtitle;
       state.postInfo.content = payload.content;
+      // state.postInfo.banner = payload.banner;
     },
   },
   actions: {
@@ -91,8 +92,8 @@ export default new Vuex.Store({
           } else {
             updatePost(this.state.postInfo);
           }
-        })
-        .catch( err => console.log( err ) );
+        }).catch( err => console.log( err ) );
+
       } else {
         if ( this.state.postInfo.id === undefined ) {
           insertPost(this.state.postInfo); 
@@ -103,9 +104,12 @@ export default new Vuex.Store({
     },
 
     // 이름 바꿔야됨
-    async FetchPost({ dispatch }, postInfo) {
-      await dispatch('SavePost', postInfo);
-      await dispatch('SaveImg');
+    FetchPost({ dispatch }, postInfo) {
+      return new Promise( async (resolve, reject) => {
+        await dispatch('SavePost', postInfo);
+        await dispatch('SaveImg');
+        resolve();
+      });
     }
 
   },
