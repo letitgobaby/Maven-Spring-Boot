@@ -19,7 +19,6 @@ public class PostController {
 
   @GetMapping
   public String postIndex(Model model, @RequestParam("page") @Nullable Long id) {
-
     Long pageId = 1L;
     if ( id != null ) pageId = id;
 

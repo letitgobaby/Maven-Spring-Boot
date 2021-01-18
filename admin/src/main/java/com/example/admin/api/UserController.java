@@ -20,7 +20,6 @@ public class UserController {
 
   @Autowired
   UserService userService;
-  
     
   @GetMapping(value = "/api/user")
   public @ResponseBody JSONObject userInfo(HttpServletRequest request) {
