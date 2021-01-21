@@ -63,12 +63,12 @@ export default {
   },
 
   methods: {
-    ...mapActions(['resetUser']),
+    ...mapActions(['Logout']),
 
     handleUserCommand(cmd) {
       if (cmd === 'logout') {
         this.$router.push('/login')
-        this.resetUser()
+        this.Logout()
       }
     }
   }
