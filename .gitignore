@@ -26,6 +26,7 @@ node/
 package-lock.json
 node_modules/
 
+
 dist/
 resources/
 templates/
@@ -38,6 +39,4 @@ target/
 *.factorypath
 *.classpath
 *.iml
-
-
 .vscode/
