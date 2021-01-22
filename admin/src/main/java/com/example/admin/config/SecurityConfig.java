@@ -16,14 +16,14 @@ public class SecurityConfig extends SecurityCoreConfig {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
 
-
-
     // http.csrf().disable();
     // http
     //   .authorizeRequests()
     //     .antMatchers("/", "/login", "/login-error").permitAll()
     //     .antMatchers("/member/**").hasRole("ADMIN")
     //     .antMatchers("/**").permitAll();
+    
+
     http
       .cors().and()
       .authorizeRequests()
@@ -35,7 +35,7 @@ public class SecurityConfig extends SecurityCoreConfig {
       .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
       .logoutSuccessUrl("/login")
       .invalidateHttpSession(true);
-
+    
   }
   
 }

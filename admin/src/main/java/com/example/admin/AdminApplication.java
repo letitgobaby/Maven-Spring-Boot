@@ -11,9 +11,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 
 @EnableSwagger2
-@ComponentScan(basePackages = {"com.example.admin", "com.example.core"})
+@ComponentScan(basePackages = {"com.example.*"})
 @SpringBootApplication
-@EnableJpaRepositories
+// @EnableJpaRepositories
 public class AdminApplication extends SpringBootServletInitializer {
 
 	@Override
