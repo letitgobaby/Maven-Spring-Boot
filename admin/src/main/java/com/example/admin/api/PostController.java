@@ -76,13 +76,13 @@ public class PostController {
   @PostMapping(value = "/api/posts/image")
   public @ResponseBody void uploadImage(@RequestParam("file") MultipartFile file) throws Exception {
     String originalfileName = file.getOriginalFilename();
-		File dest = new File("C:/Users/Joins/_images/" + originalfileName);
+		File dest = new File("C:/Users/jinwoo/_images/" + originalfileName);
     file.transferTo(dest);
   }
 
   @GetMapping(value = "/api/posts/images/{name}", produces = MediaType.IMAGE_JPEG_VALUE)
   public @ResponseBody byte[] getImage(@PathVariable("name") String name) throws IOException {
-    String resourceFile ="C:/Users/Joins/_images/" + name;
+    String resourceFile ="C:/Users/jinwoo/_images/" + name;
     InputStream resourceStream = new BufferedInputStream( new FileInputStream(resourceFile));
 
     return IOUtils.toByteArray(resourceStream);

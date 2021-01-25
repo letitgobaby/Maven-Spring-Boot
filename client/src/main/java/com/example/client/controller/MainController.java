@@ -21,8 +21,6 @@ public class MainController {
 
   @GetMapping
   public String index(Model model) {
-
-    // Title, SubTitle
     model.addAttribute("title", "jinwooJeong");
     model.addAttribute("subtitle", "hello jinwoo !!");
 

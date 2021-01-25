@@ -34,11 +34,10 @@ public class UserController {
     HttpSession session = request.getSession();
     JSONObject result = userService.logIn(jobj);
 
-    System.out.println("hello");
-
     if (result.get("name") != null) {
       session.setAttribute("USER", result);
     }
+
     return result;
   }
 
