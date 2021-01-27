@@ -5,7 +5,9 @@ export default function checkUser(to, from, next) {
   const { dispatch, getters } = store
 
   if (to.matched.some(record => record.meta.requiresUser)) {
-    const token = ls.get('X-Token')
+    // const token = ls.get('X-Token')
+    const token = ls.get('X-AUTH-TOKEN');
+
     if (!token) {
       next('/login')
       return

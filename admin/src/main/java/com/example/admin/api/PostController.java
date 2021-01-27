@@ -63,13 +63,11 @@ public class PostController {
 
   @PutMapping(value = "/api/posts")
   public @ResponseBody void updatePost(@RequestBody JSONObject jobj) {
-    System.out.println(" PUT PUT PUT PUT ");
     postService.updatePost(jobj);
   }
 
   @DeleteMapping(value = "/api/posts/{id}")
   public @ResponseBody void deletePost(@PathVariable("id") Long id) {
-    System.out.println("deletePost");
     postService.deletePost(id);
   }
 

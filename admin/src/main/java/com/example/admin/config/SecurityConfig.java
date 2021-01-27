@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -17,7 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
-import java.util.Collections;
 
 @Order(1)
 @Configuration
@@ -45,19 +43,16 @@ public class SecurityConfig extends SecurityCoreConfig {
     http
       .headers().frameOptions().disable()
       .and()
-      .csrf().disable()
       .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
+    http.csrf().disable();
     // http.csrf().csrfTokenRepository(new CookieCsrfTokenRepository());
 
-    // http
-    //   .authorizeRequests()
-    //     .antMatchers("/h2-console").permitAll()
-    //     .antMatchers("/api/user/*").permitAll()
-    //     .antMatchers("/test/**").permitAll()
-    //     .antMatchers("/**").authenticated();
-
-    http.authorizeRequests().antMatchers("/**").permitAll();
+    http
+      .authorizeRequests()
+      .antMatchers("/**").permitAll();
+        // .antMatchers("/test/test").hasRole("ADMIN")
+        
 
     http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
 

@@ -10,6 +10,7 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,20 +27,21 @@ public class MemberController {
   @Autowired
   MemberRepo memberRepo;
 
-  @PostMapping("/test/join")
+  @PostMapping("/api/test/join")
   public @ResponseBody long join(@RequestBody JSONObject user) {
     return memberRepo.save(
       Member.builder()
-        .userId(user.get("userid").toString())
+        .userId(user.get("username").toString())
         .password(passwordEncoder.encode(user.get("password").toString()))
         .roles(Collections.singletonList("ROLE_USER"))
         .build()
       ).getId();
   }
 
-  @PostMapping("/test/login")
+
+  @PostMapping("/api/test/login")
   public @ResponseBody String login(@RequestBody JSONObject user) {
-    Member member = memberRepo.findByUserId(user.get("userid").toString())
+    Member member = memberRepo.findByUserId(user.get("username").toString())
       .orElseThrow(() -> new IllegalArgumentException("없는 아이디입니다."));
 
     if (!passwordEncoder.matches(user.get("password").toString(), member.getPassword())) {
@@ -48,5 +50,12 @@ public class MemberController {
     
     return jwtTokenProvider.createToken(member.getUserId(), member.getRoles());
   }
+
+
+  @GetMapping("/api/test/test")
+  public @ResponseBody String test() {
+    return "TEST !!!";
+  }
+
 
 }

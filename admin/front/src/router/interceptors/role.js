@@ -33,3 +33,4 @@ function checkAndNext(roles, requiresRole, next, dispatch) {
     next('/403')
   }
 }
+
