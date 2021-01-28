@@ -7,6 +7,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.simple.JSONObject;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -36,16 +37,30 @@ public class JwtTokenProvider {
   }
 
   // JWT 토큰 생성
-  public String createToken(String userPk, List<String> roles) {
+  public JSONObject createToken(String userPk, List<String> roles) {
     Claims claims = Jwts.claims().setSubject(userPk); // JWT payload 에 저장되는 정보단위
     claims.put("roles", roles); // 정보는 key / value 쌍으로 저장된다.
     Date now = new Date();
 
-    return Jwts.builder().setClaims(claims) // 정보 저장
-        .setIssuedAt(now) // 토큰 발행 시간 정보
-        .setExpiration(new Date(now.getTime() + tokenValidTime)) // set Expire Time
-        .signWith(SignatureAlgorithm.HS256, secretKey) // 사용할 암호화 알고리즘과
-        .compact();  // signature 에 들어갈 secret값 세팅
+    String token = Jwts.builder().setClaims(claims) // 정보 저장
+    .setIssuedAt(now) // 토큰 발행 시간 정보
+    .setExpiration(new Date(now.getTime() + tokenValidTime)) // set Expire Time
+    .signWith(SignatureAlgorithm.HS256, secretKey) // 사용할 암호화 알고리즘과
+    .compact();
+
+
+
+    JSONObject jobj = new JSONObject();
+    jobj.put("name", userPk);
+    jobj.put("roles", roles);
+    jobj.put("token", token);
+
+    return jobj;
+    // return Jwts.builder().setClaims(claims) // 정보 저장
+    //     .setIssuedAt(now) // 토큰 발행 시간 정보
+    //     .setExpiration(new Date(now.getTime() + tokenValidTime)) // set Expire Time
+    //     .signWith(SignatureAlgorithm.HS256, secretKey) // 사용할 암호화 알고리즘과
+    //     .compact();  // signature 에 들어갈 secret값 세팅
   }
 
   // JWT 토큰에서 인증 정보 조회

@@ -50,7 +50,10 @@ public class SecurityConfig extends SecurityCoreConfig {
 
     http
       .authorizeRequests()
-      .antMatchers("/**").permitAll();
+        .antMatchers("/api/member/login").permitAll()
+        .antMatchers("/api/user/logout", "/api/member/logout").permitAll()
+        .antMatchers("/api/**").hasAnyRole("ADMIN");
+      // .antMatchers("/**").permitAll();
         // .antMatchers("/test/test").hasRole("ADMIN")
         
 
@@ -58,35 +61,9 @@ public class SecurityConfig extends SecurityCoreConfig {
 
   }
 
-  // protected void configure(HttpSecurity http) throws Exception {
-  // http
-  // .csrf().disable()
-  // .addFilterBefore(CorsFilter , UsernamePasswordAuthenticationFilter.class)
-  // .exceptionHandling()
-  // .authenticationEntryPoint(unauthorizedHandler)
-  // .accessDeniedHandler()
-  // .and()
-  // .headers().frameOptions().sameOrigin()
-  // .and()
-  // .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-  // .and()
-  // .authorizeRequests().antMatchers("/**").permitAll()
-  // .anyRequest().authenticated()
-  // .and()
-  // .apply(securityConfigurerAdapter());
-  // }
 
   // @Override
   // protected void configure(HttpSecurity http) throws Exception {
-
-  // http.csrf().disable();
-
-  // http
-  // .headers().frameOptions().disable()
-  // .and()
-  // .authorizeRequests()
-  // // .antMatchers("/favicon.ico").permitAll()
-  // .antMatchers("/h2-console/**").permitAll();
 
   // http
   // .cors().and()

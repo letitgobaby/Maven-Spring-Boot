@@ -3,7 +3,7 @@ import request from '@/utils/request'
 export function reqLogin (loginParam) {
   return request({
     // url: '/api/user/login',
-    url: '/api/test/login',
+    url: '/api/member/login',
     method: 'POST',
     data: loginParam
   })
@@ -19,7 +19,8 @@ export function reqUserInfo () {
 
 export function reqLogout () {
   return request({
-    url: '/api/user/logout',
+    // url: '/api/user/logout',
+    url: '/api/member/logout',
     method: 'POST'
   })
 }

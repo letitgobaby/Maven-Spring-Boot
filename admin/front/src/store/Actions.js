@@ -9,9 +9,8 @@ export default {
         .then((body) => {
 
           console.log('# login #');
-          // commit('SetUser', { data: body });
-
-          commit('SetToken', { data: body });
+          commit('SetUser', { data: body });
+          // commit('SetToken', { data: body });
 
           resolve()
         })
