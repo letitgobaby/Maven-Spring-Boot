@@ -55,9 +55,9 @@ public class SecurityConfig extends SecurityCoreConfig {
 
     http
       .authorizeRequests()
-        .antMatchers(PUBLIC).permitAll()
-        .antMatchers("/api/**").permitAll()
-        // .antMatchers("/api/**").hasRole("ADMIN")
+        // .antMatchers(PUBLIC).permitAll()
+        .antMatchers("/api/member/**").permitAll()
+        .antMatchers("/api/**").hasRole("ADMIN")
         .anyRequest().authenticated();
 
     // http.logout()

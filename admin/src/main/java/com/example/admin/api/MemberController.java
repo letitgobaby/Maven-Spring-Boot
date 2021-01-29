@@ -10,6 +10,7 @@ import com.example.core.security.JwtTokenProvider;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -57,6 +58,8 @@ public class MemberController {
   @PostMapping("/api/member/logout")
   public @ResponseBody String logout() {
 
+
+
     return "logout";
   }
 
@@ -65,11 +68,11 @@ public class MemberController {
     Authentication auth = jwtTokenProvider.getAuthentication(token);
     Member member = (Member) auth.getPrincipal();
 
-    String username = member.getUserId();
-    List<String> roles = (List) auth.getAuthorities();
+    // String username = member.getUserId();
+    // List<String> roles = (List) auth.getAuthorities();
 
-    System.out.println( roles );
-    System.out.println( roles.getClass().getName() );
+    // System.out.println( roles );
+    // System.out.println( roles.getClass().getName() );
     
     System.out.println( member.getRoles() );
     System.out.println(member.getRoles().getClass().getName());
@@ -79,6 +82,8 @@ public class MemberController {
 
   @GetMapping("/api/member/test")
   public @ResponseBody String test() {
+
+    System.out.println( SecurityContextHolder.getContext().getAuthentication().getPrincipal() );
     return "TEST !!!";
   }
 
