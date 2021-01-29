@@ -10,9 +10,9 @@ export function reqLogin (loginParam) {
 }
 
 export function reqUserInfo () {
-  console.log("reqUserInfo");
   return request({
-    url: '/api/user',
+    // url: '/api/user',
+    url: '/api/member',
     method: 'GET'
   })
 }

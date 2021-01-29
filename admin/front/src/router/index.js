@@ -66,6 +66,6 @@ const router = new Router({
 })
 
 router.beforeEach(UserInterceptor)
-// router.beforeEach(RoleInterceptor)
+router.beforeEach(RoleInterceptor)
 
 export default router

@@ -15,11 +15,16 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
 @Order(1)
 @Configuration
 public class SecurityConfig extends SecurityCoreConfig {
+
+  private static final String[] PUBLIC = new String[]{
+    "/api/member/login", "/api/member/join", "/api/member/logout"
+  };
 
   @Autowired
   private JwtTokenProvider jwtTokenProvider;
@@ -50,33 +55,18 @@ public class SecurityConfig extends SecurityCoreConfig {
 
     http
       .authorizeRequests()
-        .antMatchers("/api/member/login").permitAll()
-        .antMatchers("/api/user/logout", "/api/member/logout").permitAll()
-        .antMatchers("/api/**").hasAnyRole("ADMIN");
-      // .antMatchers("/**").permitAll();
-        // .antMatchers("/test/test").hasRole("ADMIN")
-        
+        .antMatchers(PUBLIC).permitAll()
+        .antMatchers("/api/**").permitAll()
+        // .antMatchers("/api/**").hasRole("ADMIN")
+        .anyRequest().authenticated();
 
+    // http.logout()
+		// 	.logoutRequestMatcher(new AntPathRequestMatcher("/api/member/logout"))
+		// 	.logoutSuccessUrl("/")
+    //   .invalidateHttpSession(true);        
+      
     http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
 
   }
-
-
-  // @Override
-  // protected void configure(HttpSecurity http) throws Exception {
-
-  // http
-  // .cors().and()
-  // .authorizeRequests()
-  // // .antMatchers("/member").hasRole("ADMIN")
-  // // .antMatchers("/").hasAnyRole("ADMIN","USER")
-  // .antMatchers("/api/posts/*").permitAll()
-  // .antMatchers("/api/user/*").permitAll()
-  // .anyRequest().authenticated()
-  // .and()
-  // .csrf()
-  // .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
-
-  // }
 
 }

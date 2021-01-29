@@ -1,17 +1,14 @@
 import { fileUpload, insertPost, updatePost } from '@/api/post'
 import { reqLogin, reqUserInfo, reqLogout } from '@/api/user'
+import ls from 'store'
+import store from '@/store/'
 
 export default {
-
   Login({ commit }, loginInfo) {
     return new Promise((resolve, reject) => {
       reqLogin(loginInfo)
         .then((body) => {
-
-          console.log('# login #');
           commit('SetUser', { data: body });
-          // commit('SetToken', { data: body });
-
           resolve()
         })
         .catch(error => {
@@ -21,13 +18,14 @@ export default {
   },
 
   async GetUserInfo({ commit }) {
-    console.log('~ GetUserInfo ~');
     const body = await reqUserInfo();
+    console.log('^^^^^^^', body );
     commit('SetUser', { data: body });
   },
 
   async Logout({ commit }) {
     await reqLogout();
+    ls.set('X-Token', ''); // ls.clearAll();
     const { user } = initialState();
     commit('SetUser', { data: user });
   },

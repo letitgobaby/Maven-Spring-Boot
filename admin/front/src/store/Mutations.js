@@ -2,14 +2,8 @@ import ls from 'store'
 
 export default {
   SetUser(state, payload) {
-    console.log('~ SETUSER ~')
     state.user = payload.data || {}
     ls.set('X-Token', state.user.token)
-    // ls.set('X-Token', payload.data);
-  },
-
-  SetToken(state, payload) {
-    ls.set('X-AUTH-TOKEN', payload.data);
   },
 
   SetImgData(state, payload) {
