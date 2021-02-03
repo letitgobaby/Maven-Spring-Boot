@@ -1,7 +1,6 @@
 package com.example.admin.api;
 
 import java.util.Collections;
-import java.util.List;
 
 import com.example.core.model.Member;
 import com.example.core.repository.MemberRepo;
@@ -24,13 +23,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class MemberController {
 
   @Autowired
-  PasswordEncoder passwordEncoder;
+  private PasswordEncoder passwordEncoder;
 
   @Autowired
-  JwtTokenProvider jwtTokenProvider;
+  private MemberRepo memberRepo;
 
   @Autowired
-  MemberRepo memberRepo;
+  private JwtTokenProvider jwtTokenProvider;
 
   @PostMapping("/api/member/join")
   public @ResponseBody long join(@RequestBody JSONObject user) {
@@ -58,24 +57,13 @@ public class MemberController {
   @PostMapping("/api/member/logout")
   public @ResponseBody String logout() {
 
-
-
     return "logout";
   }
 
   @GetMapping("/api/member")
-  public @ResponseBody JSONObject memberInfo(@RequestHeader("X-Token") String token) {
+  public @ResponseBody JSONObject memberInfo(@RequestHeader("X-AUTH-TOKEN") String token) {
     Authentication auth = jwtTokenProvider.getAuthentication(token);
     Member member = (Member) auth.getPrincipal();
-
-    // String username = member.getUserId();
-    // List<String> roles = (List) auth.getAuthorities();
-
-    // System.out.println( roles );
-    // System.out.println( roles.getClass().getName() );
-    
-    System.out.println( member.getRoles() );
-    System.out.println(member.getRoles().getClass().getName());
 
     return jwtTokenProvider.createToken(member.getUserId(), member.getRoles());
   }

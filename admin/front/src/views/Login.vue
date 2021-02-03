@@ -96,7 +96,7 @@ export default {
             message: '로그인 성공'
           })
           
-          this.$router.push('/')
+          this.$router.push('/');
         })
         .catch((err) => {
           this.$notify.error({

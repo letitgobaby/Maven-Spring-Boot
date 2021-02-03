@@ -1,9 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-// import ls from 'store'
-
-// import { fileUpload, insertPost, updatePost } from '@/api/post'
-// import { reqLogin, reqUserInfo, reqLogout } from '@/api/user'
 
 import Mutations from './Mutations'
 import Actions from './Actions'
