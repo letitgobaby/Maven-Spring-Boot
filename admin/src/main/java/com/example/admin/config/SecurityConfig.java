@@ -54,14 +54,13 @@ public class SecurityConfig extends SecurityCoreConfig {
       .and()
       .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-    http.csrf().disable();
-    // http.csrf().csrfTokenRepository(new CookieCsrfTokenRepository());
+    // http.csrf().disable();
+    http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 
     http
       .authorizeRequests()
-        // .antMatchers(PUBLIC).permitAll()
         .antMatchers("/api/member/**").permitAll()
-        .antMatchers(ROLEUSER).hasAnyAuthority("ADMIN", "ROLE_USER")
+        .antMatchers(ROLEUSER).hasAnyAuthority("ADMIN", "ROLE_USER", "ROLE_ADMIN")
         .antMatchers("/api/**").hasAuthority("ADMIN")
         .anyRequest().authenticated();
  
