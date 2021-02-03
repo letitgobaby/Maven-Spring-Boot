@@ -3,7 +3,7 @@ import ls from 'store'
 export default {
   SetUser(state, payload) {
     state.user = payload.data || {}
-    ls.set('X-Token', state.user.token)
+    ls.set('X-AUTH-TOKEN', state.user.token)
   },
 
   SetImgData(state, payload) {

@@ -23,9 +23,9 @@ const errorHandler = error => {
 }
 
 request.interceptors.request.use(config => {
-  const token = ls.get('X-Token')
+  const token = ls.get('X-AUTH-TOKEN')
   if (token) {
-    config.headers['X-Token'] = token
+    config.headers['X-AUTH-TOKEN'] = token
   }
   return config
 }, errorHandler)

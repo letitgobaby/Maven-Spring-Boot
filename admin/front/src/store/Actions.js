@@ -10,22 +10,18 @@ export default {
         .then((body) => {
           commit('SetUser', { data: body });
           resolve()
-        })
-        .catch(error => {
-          reject(error)
-        })
+        }).catch(error => { reject(error) })
     })
   },
 
   async GetUserInfo({ commit }) {
     const body = await reqUserInfo();
-    console.log('^^^^^^^', body );
     commit('SetUser', { data: body });
   },
 
   async Logout({ commit }) {
     await reqLogout();
-    ls.set('X-Token', ''); // ls.clearAll();
+    ls.set('X-AUTH-TOKEN', ''); // ls.clearAll();
     const { user } = initialState();
     commit('SetUser', { data: user });
   },
