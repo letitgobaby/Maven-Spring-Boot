@@ -26,6 +26,10 @@ public class SecurityConfig extends SecurityCoreConfig {
     "/api/member/login", "/api/member/join", "/api/member/logout"
   };
 
+  private static final String[] ROLEUSER = new String[] {
+    "/api/posts", "/api/counts"
+  };
+
   @Autowired
   private JwtTokenProvider jwtTokenProvider;
 
@@ -57,13 +61,10 @@ public class SecurityConfig extends SecurityCoreConfig {
       .authorizeRequests()
         // .antMatchers(PUBLIC).permitAll()
         .antMatchers("/api/member/**").permitAll()
-        .antMatchers("/api/**").hasRole("ADMIN")
+        .antMatchers(ROLEUSER).hasAnyAuthority("ADMIN", "ROLE_USER")
+        .antMatchers("/api/**").hasAuthority("ADMIN")
         .anyRequest().authenticated();
-
-    // http.logout()
-		// 	.logoutRequestMatcher(new AntPathRequestMatcher("/api/member/logout"))
-		// 	.logoutSuccessUrl("/")
-    //   .invalidateHttpSession(true);        
+ 
       
     http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
 
