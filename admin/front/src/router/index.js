@@ -30,6 +30,7 @@ const router = new Router({
           name: 'home',
           meta: {
             requiresUser: true,
+            requiresRole: 'ROLE_USER',
             breadcrumb: ['home']
           },
           component: Home
