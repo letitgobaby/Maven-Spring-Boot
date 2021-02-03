@@ -41,6 +41,7 @@ const router = new Router({
           name: 'editor',
           meta: {
             requiresUser: true,
+            requiresRole: 'ADMIN',
             breadcrumb: [{ name: 'home', path: '/' }, { name: 'editor' }]
           },
           component: () =>
