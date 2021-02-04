@@ -22,15 +22,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class MemberController {
 
-  @Autowired
-  private PasswordEncoder passwordEncoder;
+  private final PasswordEncoder passwordEncoder;
 
-  @Autowired
-  private MemberRepo memberRepo;
+  private final MemberRepo memberRepo;
 
-  @Autowired
-  private JwtTokenProvider jwtTokenProvider;
+  private final JwtTokenProvider jwtTokenProvider;
 
+  public MemberController(PasswordEncoder encoder, MemberRepo repo, JwtTokenProvider provider) {
+    this.passwordEncoder = encoder;
+    this.memberRepo = repo;
+    this.jwtTokenProvider = provider;
+  }
+
+  
   @PostMapping("/api/member/join")
   public @ResponseBody long join(@RequestBody JSONObject user) {
     return memberRepo.save(
@@ -62,8 +66,8 @@ public class MemberController {
 
   @GetMapping("/api/member")
   public @ResponseBody JSONObject memberInfo(@RequestHeader("X-AUTH-TOKEN") String token) {
-    Authentication auth = jwtTokenProvider.getAuthentication(token);
-    Member member = (Member) auth.getPrincipal();
+    Authentication authentication = jwtTokenProvider.getAuthentication(token);
+    Member member = (Member) authentication.getPrincipal();
 
     return jwtTokenProvider.createToken(member.getUserId(), member.getRoles());
   }

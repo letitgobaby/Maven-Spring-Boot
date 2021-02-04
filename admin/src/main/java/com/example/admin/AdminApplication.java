@@ -20,7 +20,7 @@ public class AdminApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
 		SpringApplication.run(AdminApplication.class, args);
-		System.out.println("THIS IS ADMIN @@@");
+		System.out.println("THIS IS ADMIN");
 	}
 
 }

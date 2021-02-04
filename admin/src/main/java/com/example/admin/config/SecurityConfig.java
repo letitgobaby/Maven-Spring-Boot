@@ -22,10 +22,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 public class SecurityConfig extends SecurityCoreConfig {
 
-  private static final String[] PUBLIC = new String[]{
-    "/api/member/login", "/api/member/join", "/api/member/logout"
-  };
-
   private static final String[] ROLEUSER = new String[] {
     "/api/posts", "/api/counts"
   };
@@ -33,13 +29,11 @@ public class SecurityConfig extends SecurityCoreConfig {
   @Autowired
   private JwtTokenProvider jwtTokenProvider;
 
-  // 암호화에 필요한 PasswordEncoder 를 Bean 등록합니다.
   @Bean
   public PasswordEncoder passwordEncoder() {
       return PasswordEncoderFactories.createDelegatingPasswordEncoder();
   }
 
-  // authenticationManager를 Bean 등록합니다.
   @Bean
   @Override
   public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -64,9 +58,7 @@ public class SecurityConfig extends SecurityCoreConfig {
         .antMatchers("/api/**").hasAuthority("ADMIN")
         .anyRequest().authenticated();
  
-      
     http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
-
   }
 
 }

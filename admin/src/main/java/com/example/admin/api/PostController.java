@@ -31,8 +31,11 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class PostController {
   
-  @Autowired
   private PostService postService;
+
+  public PostController(PostService service) {
+    this.postService = service;
+  }
 
   @GetMapping(value = "/api/counts")
   public @ResponseBody Long getCountAll() {
