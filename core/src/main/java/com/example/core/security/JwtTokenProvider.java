@@ -42,11 +42,12 @@ public class JwtTokenProvider {
     claims.put("roles", roles); // 정보는 key / value 쌍으로 저장된다.
     Date now = new Date();
 
-    String token = Jwts.builder().setClaims(claims) // 정보 저장
-    .setIssuedAt(now) // 토큰 발행 시간 정보
-    .setExpiration(new Date(now.getTime() + tokenValidTime)) // set Expire Time
-    .signWith(SignatureAlgorithm.HS256, secretKey) // 사용할 암호화 알고리즘과
-    .compact();
+    String token = 
+      Jwts.builder().setClaims(claims) // 정보 저장
+        .setIssuedAt(now) // 토큰 발행 시간 정보
+        .setExpiration(new Date(now.getTime() + tokenValidTime)) // set Expire Time
+        .signWith(SignatureAlgorithm.HS256, secretKey) // 사용할 암호화 알고리즘
+        .compact();
 
     JSONObject jobj = new JSONObject();
     jobj.put("name", userPk);
